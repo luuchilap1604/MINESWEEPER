@@ -69,13 +69,14 @@ Chương trình được thiết kế theo mô hình **tách biệt Logic – Gi
 
 ### Các thành phần chính:
 
-| Thành phần | Mô tả | Dòng code |
-|-----------|-------|-----------|
-| **`Board`** (class) | Chứa toàn bộ logic game: đặt mìn, mở ô (DFS), cắm cờ, kiểm tra thắng/thua. Không phụ thuộc Pygame. | 63–188 |
-| **`Renderer`** (class) | Đọc trạng thái từ `Board` và vẽ lên màn hình Pygame: ô, số, cờ, mìn, header. | 193–348 |
-| **`difficulty_menu()`** | Màn hình chọn độ khó trước khi bắt đầu game. | 352–397 |
-| **`game_loop()`** | Vòng lặp chính: xử lý sự kiện Pygame, gọi Board và Renderer mỗi frame (60 FPS). | 432–525 |
-| **`main()`** | Điểm vào chương trình, quản lý luồng menu → game → restart/quit. | 530–549 |
+| Thành phần | Mô tả |
+|-----------|-------|
+| **`Assets`** (class) | Tải hình ảnh từ thư mục `images/`. Nếu file ảnh không tồn tại, tự sinh placeholder đồ hoạ đầy màu sắc. |
+| **`Board`** (class) | Chứa toàn bộ logic game: đặt mìn, mở ô (DFS), cắm cờ, kiểm tra thắng/thua. Không phụ thuộc Pygame. |
+| **`Renderer`** (class) | Đọc trạng thái từ `Board` và vẽ lên màn hình Pygame bằng image assets: ô, số, cờ, mìn, header. |
+| **`difficulty_menu()`** | Màn hình chọn độ khó với giao diện gradient hiện đại. |
+| **`game_loop()`** | Vòng lặp chính: xử lý sự kiện Pygame, gọi Board và Renderer mỗi frame (60 FPS). |
+| **`main()`** | Điểm vào chương trình, quản lý luồng menu → game → restart/quit. |
 
 ---
 
@@ -522,10 +523,24 @@ python3 minesweeper.py
 
 ```
 BTL_AI/
-├── minesweeper.py      # Mã nguồn chính (game logic + GUI)
-├── DOCUMENTATION.md    # Tài liệu dự án (file này)
-└── .venv/              # Môi trường ảo Python (không commit)
+├── minesweeper.py          # Mã nguồn chính (game logic + GUI + asset loader)
+├── DOCUMENTATION.md        # Tài liệu dự án (file này)
+├── images/                 # Thư mục hình ảnh (tuỳ chọn)
+│   ├── cell_unrevealed.png # Ô chưa mở (40×40)
+│   ├── cell_revealed.png   # Ô đã mở (40×40)
+│   ├── mine.png            # Biểu tượng mìn (40×40)
+│   ├── flag.png            # Biểu tượng cờ (40×40)
+│   ├── exploded.png        # Nền ô mìn nổ (40×40)
+│   ├── wrong_flag.png      # Overlay cờ sai (40×40)
+│   ├── num_1.png … num_8.png  # Số 1–8 (40×40)
+│   ├── face_normal.png     # Mặt bình thường (36×36)
+│   ├── face_win.png        # Mặt thắng (36×36)
+│   ├── face_lose.png       # Mặt thua (36×36)
+│   └── logo.png            # Logo menu (tuỳ chọn)
+└── .venv/                  # Môi trường ảo Python (không commit)
 ```
+
+> **Ghi chú:** Tất cả hình ảnh trong `images/` đều là **tuỳ chọn**. Nếu file ảnh không tồn tại, chương trình sẽ tự động tạo placeholder đồ hoạ đầy màu sắc.
 
 ---
 
